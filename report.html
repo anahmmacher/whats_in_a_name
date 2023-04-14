@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>What's in a Name - Report</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Delius&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Stalemate&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Reenie+Beanie&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Give+You+Glory&display=swap" rel="stylesheet">
+	<script src="nametag.js"></script>
+</head>
+
+<body>
+	<header>
+		<div id=banner>
+			<div id="banner_text">
+			<h1>
+				What's in a Name:
+			</h1>
+			<h3>
+				Looking at Naming Trends and Details Over Time
+			</h3>
+			<p>
+				By Arthur Nahmmacher
+			</p>
+			</div>
+
+		<div id="nametag">
+			<h2>HELLO</h2>
+			<p>my name is</p>
+			<div id="namespace"><span id="nametext">Arthur</span></div>
+		</div>
+		</div>
+		<nav>
+			<ul>
+				<li><a href="index.html">Home</a></li>
+				<li><a href="report.html">Report</a></li>
+				<li><a href="notes.html">Notes</a></li>
+				<li><a href="contact.html">Contact</a></li>
+			</ul>
+		</nav>
+	</header>
+	<div class="sidebar">
+		<ul>
+			<li><a href="#intro">Intro</a></li>
+			<li><a href="#process">Process</a></li>
+			<li><a href="#analysis">Analysis</a></li>
+			<li><a href="#updates">Future Updates</a></li>
+		</ul>
+	</div>
+	<main>
+		<section class="title">
+			<h1> Data Analysis and Visualizations</h1>
+		</section>
+		<section id="intro">
+			<h2>1. Intro</h2>
+			<p>Data used for this analysis and visualization was sourced from the public dataset on Google BigQuery that was created by the Social Security Administration.
+			This dataset contains all names from Social Security card applications for births that occurred in the United States after 1879.
+			The data set does have limitations that should be noted, such as the fact that many people born before 1937 never
+			applied for a Social Security card, so their names are not included in this data. For others who did apply, records may
+			not show the place of birth, and again their names are not included in the data. Also, to
+			safeguard privacy, the Social Security Administration restricts names to those with at least 5 occurrences.</p>
+			<p></p>
+		</section>
+		<section id="process">
+			<h2>2. Process</h2>
+			<p>Data covers records from years 1910 to 2021. A copy was made and saved under my own BigQuery account in order to manipulate data for the visualizations. 
+			Two versions of the dataset were made, one is similar to the original file with a couple of columns added, and the other has the records grouped by decade. The original file has 6,311,504 individual records, 
+			while the decade version has 1,187,038.
+			Original Columns used include:</p>
+			<ul>
+				<li>State(two-char state code) - String</li>
+				<li>Gender(sex M = male/F = female) - String </li>
+				<li>Year(YYYY format ) - Integer </li>
+				<li>Name (given name of person at birth) - String</li>
+				<li>Number (Number of occurrences of name)</li>
+			</ul>
+			<p>
+				The original dataset on BigQuery Public Data has already been cleaned of null values. This was double-checked using a query,
+				which didn't yield any null records. At this point there was a decision to create two datasets, one working with they years given originaly,
+				and a second one that groups records into decades instead of years. Both records will have additional data added that would make it 
+				too complicated to have as one large table. Also, a third dataset was created that would be used for tracking certain details of each unique name.
+				this thrid dataset, along with the extra columns on the previous two datasets where created with SQL queries on Google BiqQuery. 
+				More information on this can be found in the "Notes" Section of this site.
+			</p>
+		</section>
+		<section id="analysis">
+			<h2>3. Analysis</h2>
+			<h3> 3.1 Top 10 Baby Names</h3>
+		<div class='tableauPlaceholder' id='viz1680988908988' style='position: relative'><noscript><a href='#'><img alt=' '
+								src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Wh&#47;WhatsinaName_16809086829920&#47;Top10BabyNames&#47;1_rss.png'
+								style='border: none' /></a></noscript><object class='tableauViz' style='display:none;'>
+						<param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+						<param name='embed_code_version' value='3' />
+						<param name='site_root' value='' />
+						<param name='name' value='WhatsinaName_16809086829920&#47;Top10BabyNames' />
+						<param name='tabs' value='yes' />
+						<param name='toolbar' value='yes' />
+						<param name='static_image'
+							value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Wh&#47;WhatsinaName_16809086829920&#47;Top10BabyNames&#47;1.png' />
+						<param name='animate_transition' value='yes' />
+						<param name='display_static_image' value='yes' />
+						<param name='display_spinner' value='yes' />
+						<param name='display_overlay' value='yes' />
+						<param name='display_count' value='yes' />
+						<param name='language' value='en-US' />
+		</object></div>
+				<script
+					type='text/javascript'>                    var divElement = document.getElementById('viz1680988908988'); var vizElement = divElement.getElementsByTagName('object')[0]; if (divElement.offsetWidth > 800) { vizElement.style.minWidth = '570px'; vizElement.style.maxWidth = '100%'; vizElement.style.minHeight = '770px'; vizElement.style.maxHeight = (divElement.offsetWidth * 0.75) + 'px'; } else if (divElement.offsetWidth > 500) { vizElement.style.minWidth = '570px'; vizElement.style.maxWidth = '100%'; vizElement.style.minHeight = '770px'; vizElement.style.maxHeight = (divElement.offsetWidth * 0.75) + 'px'; } else { vizElement.style.width = '100%'; vizElement.style.minHeight = '1350px'; vizElement.style.maxHeight = (divElement.offsetWidth * 1.77) + 'px'; } var scriptElement = document.createElement('script'); scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js'; vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+				<p>This Dashboard consolidates the top 10 Male and Female names in a given decade. The results (a word cloud) show names with the text
+					size correponding to it's popularity. Also, hovering the mouse over the names will give additional information, 
+					such as their ranking during the decade at a national level and state level if a state is selected. 
+					This makes it easier to visualize how naming trends have changed in the last 100 years. It makes it clear how certain names went from being extremely 
+				popular (e.g. "Mary" being the top Female name for 40+ years) to Droping off completely from the top 10 rankin in one decade. 
+				It's also easier to see why certain names invoke a specific time period or perceptiong of age because of when they were most popular.</p>
+			<h3>3.2 Name Popularity by Years</h3>
+				<div class='tableauPlaceholder' id='viz1680988866684' style='position: relative'><noscript><a href='#'><img alt=' '
+								src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Wh&#47;WhatsinaName_16809086829920&#47;Popularity&#47;1_rss.png'
+								style='border: none' /></a></noscript><object class='tableauViz' style='display:none;'>
+						<param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+						<param name='embed_code_version' value='3' />
+						<param name='site_root' value='' />
+						<param name='name' value='WhatsinaName_16809086829920&#47;Popularity' />
+						<param name='tabs' value='yes' />
+						<param name='toolbar' value='yes' />
+						<param name='static_image'
+							value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Wh&#47;WhatsinaName_16809086829920&#47;Popularity&#47;1.png' />
+						<param name='animate_transition' value='yes' />
+						<param name='display_static_image' value='yes' />
+						<param name='display_spinner' value='yes' />
+						<param name='display_overlay' value='yes' />
+						<param name='display_count' value='yes' />
+						<param name='language' value='en-US' />
+					</object></div>
+				<script
+					type='text/javascript'>                    var divElement = document.getElementById('viz1680988866684'); var vizElement = divElement.getElementsByTagName('object')[0]; if (divElement.offsetWidth > 800) { vizElement.style.minWidth = '570px'; vizElement.style.maxWidth = '100%'; vizElement.style.minHeight = '770px'; vizElement.style.maxHeight = (divElement.offsetWidth * 0.75) + 'px'; } else if (divElement.offsetWidth > 500) { vizElement.style.minWidth = '570px'; vizElement.style.maxWidth = '100%'; vizElement.style.minHeight = '770px'; vizElement.style.maxHeight = (divElement.offsetWidth * 0.75) + 'px'; } else { vizElement.style.width = '100%'; vizElement.style.minHeight = '1350px'; vizElement.style.maxHeight = (divElement.offsetWidth * 1.77) + 'px'; } var scriptElement = document.createElement('script'); scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js'; vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+			<p>This second dashboard is similar to the first, but it focuses on individual names and their popularity over the years. 
+				Entering a name in the text box and selecting it will add shapes to the graph maping the number of people born with said name by year.
+				The shapes are also divided by gender (via color) since some names have been used for both males and females. 
+				This last feature is useful for seeing how a name's popularity changes between men and women.
+				Like the Previous dashboard, the tooltip also shows additional info upon hovering the mouse on a data point on the graph as well as filtering by state. 
+				You can also compare two or more names and see how their popularity has changed over time. 
+
+			</p>
+			<h3>3.3 Name Details and Stats Pt. 1 </h3>
+				<div class='tableauPlaceholder' id='viz1681163851437' style='position: relative'><noscript><a href='#'><img alt=' '
+								src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Wh&#47;WhatsinaName_16809086829920&#47;DetailsStats1&#47;1_rss.png'
+								style='border: none' /></a></noscript><object class='tableauViz' style='display:none;'>
+						<param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+						<param name='embed_code_version' value='3' />
+						<param name='site_root' value='' />
+						<param name='name' value='WhatsinaName_16809086829920&#47;DetailsStats1' />
+						<param name='tabs' value='yes' />
+						<param name='toolbar' value='yes' />
+						<param name='static_image'
+							value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Wh&#47;WhatsinaName_16809086829920&#47;DetailsStats1&#47;1.png' />
+						<param name='animate_transition' value='yes' />
+						<param name='display_static_image' value='yes' />
+						<param name='display_spinner' value='yes' />
+						<param name='display_overlay' value='yes' />
+						<param name='display_count' value='yes' />
+						<param name='language' value='en-US' />
+					</object></div>
+				<script
+					type='text/javascript'>                    var divElement = document.getElementById('viz1681163851437'); var vizElement = divElement.getElementsByTagName('object')[0]; if (divElement.offsetWidth > 800) { vizElement.style.minWidth = '570px'; vizElement.style.maxWidth = '100%'; vizElement.style.minHeight = '770px'; vizElement.style.maxHeight = (divElement.offsetWidth * 0.75) + 'px'; } else if (divElement.offsetWidth > 500) { vizElement.style.minWidth = '570px'; vizElement.style.maxWidth = '100%'; vizElement.style.minHeight = '770px'; vizElement.style.maxHeight = (divElement.offsetWidth * 0.75) + 'px'; } else { vizElement.style.width = '100%'; vizElement.style.minHeight = '1350px'; vizElement.style.maxHeight = (divElement.offsetWidth * 1.77) + 'px'; } var scriptElement = document.createElement('script'); scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js'; vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+			<p>This last dashboard is divided into two parts. This first part shows various graphs that indicate how male and female names vary from eachother in terms of length, count and composition of letters.
+				One of the clearest difference is the variety of male and female names. Other studies on names have reached similar conclusions and have noted that women tend to have less ridgid societal standards to their names compaired to men.
+				Also, the tendency for men to be named after relatives (e.g their father) can explain why available names remain more static. Females names have always had higher variety, but it seems to have really taken off during 
+				the post-war baby boom. More info on this can be found in notes section. Also, female names tend to be slightly longer with a average length of 6.35 to males' 6.06. Letter composition also varies, as can be seen by higher average vowel count in female names, while male names have a very slight higher consonant count. 
+			</p>
+			<h3>3.4 Name Details and Stats Pt. 2</h3>
+				<div class='tableauPlaceholder' id='viz1681167863159' style='position: relative'><noscript><a href='#'><img alt=' '
+								src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Wh&#47;WhatsinaName_16809086829920&#47;DetailsStats2&#47;1_rss.png'
+								style='border: none' /></a></noscript><object class='tableauViz' style='display:none;'>
+						<param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+						<param name='embed_code_version' value='3' />
+						<param name='site_root' value='' />
+						<param name='name' value='WhatsinaName_16809086829920&#47;DetailsStats2' />
+						<param name='tabs' value='yes' />
+						<param name='toolbar' value='yes' />
+						<param name='static_image'
+							value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Wh&#47;WhatsinaName_16809086829920&#47;DetailsStats2&#47;1.png' />
+						<param name='animate_transition' value='yes' />
+						<param name='display_static_image' value='yes' />
+						<param name='display_spinner' value='yes' />
+						<param name='display_overlay' value='yes' />
+						<param name='display_count' value='yes' />
+						<param name='language' value='en-US' />
+					</object></div>
+				<script
+					type='text/javascript'>                    var divElement = document.getElementById('viz1681167863159'); var vizElement = divElement.getElementsByTagName('object')[0]; if (divElement.offsetWidth > 800) { vizElement.style.minWidth = '570px'; vizElement.style.maxWidth = '100%'; vizElement.style.minHeight = '770px'; vizElement.style.maxHeight = (divElement.offsetWidth * 0.75) + 'px'; } else if (divElement.offsetWidth > 500) { vizElement.style.minWidth = '570px'; vizElement.style.maxWidth = '100%'; vizElement.style.minHeight = '770px'; vizElement.style.maxHeight = (divElement.offsetWidth * 0.75) + 'px'; } else { vizElement.style.width = '100%'; vizElement.style.minHeight = '1350px'; vizElement.style.maxHeight = (divElement.offsetWidth * 1.77) + 'px'; } var scriptElement = document.createElement('script'); scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js'; vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+			<p>
+				This is part two of the Details and Stats dashboard, which has a focus on the most common starting and ending letters for names by gender. Names for men and women have certain letter characterisitc that don't appear in one set or the other. 
+				One example is how over half of all unique female names end in the letters "a" or "e" while nearly a quarter of all unique male names end in "n". There are also some similarities that transend gender, such as the fact that the most frequent starting letter for both men and women is "A". 
+			</p>
+		</section>
+		<section id="updates">
+			<h2>4. Future Updates</h2>
+			<p>
+				There are more areas of this topic that I would like to explore further at a later time, such as names that are used by both men and women and how they've grown in popularity over the years. 
+				I plan to come back to this project and update with additional dashboards that explore the data in that direction.
+			</p>
+		</section>
+	</main>
+</body>
+
+</html>

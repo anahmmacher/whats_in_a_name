@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>What's in a Name - Notes</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/styles/default.min.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Delius&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Stalemate&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Reenie+Beanie&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Give+You+Glory&display=swap" rel="stylesheet">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/highlight.min.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+	<script src="nametag.js"></script>
+</head>
+
+<body>
+	<header>
+		<div id=banner>
+			<div id="banner_text">
+			<h1>
+				What's in a Name:
+			</h1>
+			<h3>
+				Looking at Naming Trends and Details Over Time
+			</h3>
+			<p>
+				By Arthur Nahmmacher
+			</p>
+			</div>
+
+		<div id="nametag">
+			<h2>HELLO</h2>
+			<p>my name is</p>
+			<div id="namespace"><span id="nametext">Arthur</span></div>
+		</div>
+		</div>
+		<nav>
+			<ul>
+				<li><a href="index.html">Home</a></li>
+				<li><a href="report.html">Report</a></li>
+				<li><a href="notes.html">Notes</a></li>
+				<li><a href="contact.html">Contact</a></li>
+			</ul>
+		</nav>
+	</header>
+	<div class="sidebar">
+		<ul>
+			<li><a href="#about">About</a></li>
+			<li><a href="#clean">Clean-up</a></li>
+			<li><a href="#queries">Queries</a></li>
+			<li><a href="#visualization">Visualization</a></li>
+			<li><a href="#citations">Citations</a></li>
+		</ul>
+	</div>
+	<main>
+		<section class="title">
+			<h1>Work Notes and Code</h1>
+		</section>
+		<section id="about">
+			<h2>1. About</h2>
+			<p>This section will outline the steps taken prepare the public dataset data for use in making the Tableau dashboards, as well as cite sources
+			and show queries used. This data only covers years 1910 to 2021.</p>
+		</section>
+		<section id="clean">
+			<h2>2. Clean-up</h2>
+			<p>Cleaning your data would be the first step to take after acquiring it, however this public dataset appears to already be cleaned</p>
+			<a href="https://console.cloud.google.com/marketplace/product/social-security-administration/us-names">Public dataset page on Google Marketplace</a>
+			<p>To double check that the dataset was indeed free of null values, I used the following query to check each column for null values, just change the column name in the where clause to check each column:</p>
+			<img src="images/null_check.jpg"></img>
+		</section>
+		<section id="queries">
+			<h2>3. SQL Queries</h2>
+			<p>With Clean data, the next step is transforming it to have what is needed for the data visualizations in Tableau. Tableau was chosen for this project because
+				its dashboards allow for a high level of polish with regards to presentation as well as simplicity of use if you want to make intereactive elements, such as the first two dashboards. 
+				The fist step will be to create a new table using the original data set. 
+				This new table will hold a column with each unique name, their character length, vowel and consonant counts, which will be used for a couple of dashboards.
+				The following query will do just that. 
+			</p>
+				<img src="images/name_detail.jpg">
+			<br>
+			<p>
+				Next, we'll use a query that will create a new column in the original dataset that will hold the value of the decade that the year value belongs to (e.g "1990s" if the year is 1992). 
+			</p>
+			<img src="images/add_decades.jpg">
+			<br>
+			<p> Next, we need to add an additional column that will be needed for the dashboards that use a map of the U.S. as a filter. 
+				The standard map projection found in Tableau distorts Alaska's size which makes having all 50 states visible hard because the continental U.S. states have to be much smaller. 
+				To fix this, We will add a .shp file that has a more accurate representation of Alaska as well as having it and Hawaii close to the other states.
+				In order to sync up the data to this file, FIPS codes that correspond with each state will be added as a new column. To add these codes, a join table will be created and used. 
+				There is a blog post with more details and the files <a href="https://www.flerlagetwins.com/2021/03/alternative-map-projections-in-tableau.html">here</a>. 
+				One of the files has fips codes and states which will serve as the basis for join table. 
+				In excel, we add a state abbreviation column with the two-letter abbreviation for each state that will be the join between this and the names dataset. 
+				Next, this join table is uploaded into BigQuery and the following query will be used to join the data.	
+			</p>
+			<img src="images/add_fips.jpg">
+			<br>
+			<p>The next step is to create a copy of the dataset that is grouped by name, state, decade, gender columns and sums the number by column by the grouping. 
+				This copy will be the basis of the "Top 10" dashboard.
+			</p> 
+			<img src="images/copy_dataset.jpg">
+			<br>
+			<p>now we'll create new columns in the two datasets we have. 
+				These new columns will have the ranking of the of the name based on number of people born with that name during that year/decade, of that gender and in that state.
+			This information will be used in the tooltips of the dashboard as additional info.</p>
+			<img src="images/add_decade_state_rank.jpg">
+			<img src="images/add_years_state_rank.jpg">
+			<br>
+				<p>We will also add a national ranking value to each record to see how naming conventions deviate between individual states and nation-wide trends. 
+					The easiest way to do this is to create temp tables that have the data grouped the way we needed and create a rank value like how we did with 
+				</p> 
+			<img src="images/national_decade_temp.jpg">
+			<img src="images/national_year_temp.jpg">
+			<br>
+				<p>
+					Once these temp tables are created, we can join the national rankings back to the rest of the records where they have the same name, year/decade, and gender.
+				</p>
+			<img src="images/add_decade_national_rank.jpg">
+			<img src="images/add_year_national_rank.jpg">
+				<p>
+					With this, the tables are ready to be used in creating dashboards on Tableau. The first step is exporting what we have in BigQuery to Google Cloud Storage as CSV files. 
+					From here, the data can be downloaded and the uploaded manually to Tableau on creating a new visualization.
+				</p>
+		</section>
+		<section id="visualization">
+			<h2>4. Visualizations</h2>
+			<p>
+				Now all that is left is to connect the dataset files as the source, build the separate components as sheets and combine them into dashboards. 
+				Since there are already many resources out there with regards to creating Tableau sheets and dashboards, I wont go into too much detail in this section. 
+				However, I will go over some of the more complicated aspects of the visualization might give people trouble. 
+				The first of these is the custom map, which requires a .shp file. This type of file can't be uploaded on the Tableau Public online portal and instead needs to be added using the destop version. 
+				Also, there are a couple of other files that need to be in the same directory as the .shp file when it's uploaded or otherwise it won't have the needed info to work properly. 
+				I was able to find a state map file created by Sarah Battersby, which you can find <a href="https://community.tableau.com/s/news/a0A4T000002NGVhUAO/new-spatial-files?t=1681415626621" >here</a>, and saved all the corresponding files in the same directory as such:
+			</p>
+			<img src="images/map_files.jpg">
+			<p>
+				With the map created, you can it as a filter using dashboard actions in similar fashion as it was done <a href="https://kb.tableau.com/articles/HowTo/how-to-use-legends-as-filters-in-a-dashboard">here</a>. 
+				The same strategy can be used to make a timeline filter too. 
+			</p>
+		</section>
+		<section id="citations">
+			<h2>5. Citations</h2>
+			<ul id="cited">
+			<li><span>Time.</span> “Why There Are So Many More Names for Baby Girls,” May 10, 2016. https://time.com/4322881/baby-names-girls-boys/ </l1> 
+			<li><span>Google Cloud console.</span> “Google Cloud Console,” n.d.
+			https://console.cloud.google.com/marketplace/product/social-security-administration/us-names</li>
+			<li><span>Flerlage, Kevin.</span>“Alternative Map Projections in Tableau.” The Flerlage Twins: Analytics, Data Visualization, and Tableau, March 22,
+			2021.
+			https://www.flerlagetwins.com/2021/03/alternative-map-projections-in-tableau.html</li>
+			<li><span>How to use legends as filters in a dashboard: Tableau Software</span>. How To Use Legends As Filters In A Dashboard | Tableau
+			Software. (n.d.). Retrieved January 15, 2023, from
+			https://kb.tableau.com/articles/HowTo/how-to-use-legends-as-filters-in-a-dashboard</li>
+			<li><span>Battersby, Sarah.</span>“New Spatial Files - Tableau Community Forums,” n.d.
+			https://community.tableau.com/s/news/a0A4T000002NGVhUAO/new-spatial-files?t=1681415626621</li>
+			</ul>
+		</section>
+	</main>
+</body>
+
+</html>
